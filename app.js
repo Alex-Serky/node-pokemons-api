@@ -8,6 +8,7 @@ const {success, getUniqueId} = require('./helper.js') // Affectation destructur�
 const { Sequelize } = require('sequelize');
 const PokemonModel = require('./src/models/pokemon')
 const { ... DataTypes } = require('sequelize')
+const pokemon = require('./src/models/pokemon')
 
 
 const app = express()
@@ -37,15 +38,17 @@ const Pokemon = PokemonModel(sequelize, DataTypes)
 sequelize.sync({force: true})
     .then(_ => {
         console.log('La base de données "Pokedex" a bien été synchronisée.')
-        // On crée un nouveau pokémon en base de données
-        Pokemon.create({
-        name: 'Bulbizarre',
-        hp: 25,
-        cp: 5,
-        picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png',
-        types: ["Plante", "Poison"].join() // Affiche : "Plante,Poison" dans la BDD
-        }).then(bulbizarre => console.log(bulbizarre.toJSON()))
-        // toJSON() affiche les informations des instances d'un modèle
+        // On initialise la base de données "Pokedex" avec 12 pokémons.
+        pokemons.map(pokemon =>{ // Permet de boucler sur la liste des pokémons
+            Pokemon.create({
+            name: pokemon.name,
+            hp: pokemon.hp,
+            cp: pokemon.cp,
+            picture: pokemon.picture,
+            types: pokemon.types.join() // Affiche : "Plante,Poison" dans la BDD
+            }).then(pokemon => console.log(pokemon.toJSON()))
+            // toJSON() affiche les informations des instances d'un modèle
+        });
     })
 
 // Avant : sans le paquet Morgan
