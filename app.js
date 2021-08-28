@@ -4,9 +4,49 @@ const morgan = require('morgan')
 const favicon = require('serve-favicon')
 const pokemons = require('./mock-pokemon.js')
 const {success, getUniqueId} = require('./helper.js') // Affectation destructurée
+// 1/3. On importe le module Sequelize :
+const { Sequelize } = require('sequelize');
+const PokemonModel = require('./src/models/pokemon')
+const { ... DataTypes } = require('sequelize')
+
 
 const app = express()
 const port = 3000
+
+// 2/3. On configure la connexion à la base de données via Sequelize :
+const sequelize = new Sequelize(
+  'pokedex', // Nom de la base de données
+  'root', // Identifiant
+  '', // Mot de passe
+    {
+        host: '127.0.0.1',
+        dialect: 'mariadb',
+        dialectOptions: {
+        timezone: 'Etc/GMT-2',
+        },
+        logging: false
+    }
+)
+
+// 3/3. On teste si la connexion a réussie ou non :
+sequelize.authenticate()
+    .then(_ => console.log('Connection has been established successfully.'))
+    .catch(error => console.error('Unable to connect to the database:', error))
+const Pokemon = PokemonModel(sequelize, DataTypes)
+
+sequelize.sync({force: true})
+    .then(_ => {
+        console.log('La base de données "Pokedex" a bien été synchronisée.')
+        // On crée un nouveau pokémon en base de données
+        Pokemon.create({
+        name: 'Bulbizarre',
+        hp: 25,
+        cp: 5,
+        picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png',
+        types: ["Plante", "Poison"].join() // Affiche : "Plante,Poison" dans la BDD
+        }).then(bulbizarre => console.log(bulbizarre.toJSON()))
+        // toJSON() affiche les informations des instances d'un modèle
+    })
 
 // Avant : sans le paquet Morgan
 // app.use((req, res, next) => {
