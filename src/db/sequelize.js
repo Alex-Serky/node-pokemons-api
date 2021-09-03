@@ -22,11 +22,11 @@ const initDb = () => {
         // On initialise la base de données "Pokedex" avec 12 pokémons.
         pokemons.map(pokemon =>{ // Permet de boucler sur la liste des pokémons
             Pokemon.create({
-            name: pokemon.name,
-            hp: pokemon.hp,
-            cp: pokemon.cp,
-            picture: pokemon.picture,
-        //    types: pokemon.types.join() // Affiche : "Plante,Poison" dans la BDD
+                name: pokemon.name,
+                hp: pokemon.hp,
+                cp: pokemon.cp,
+                picture: pokemon.picture,
+            //    types: pokemon.types.join() // Affiche : "Plante,Poison" dans la BDD
             }).then(pokemon => console.log(pokemon.toJSON()))
             // toJSON() affiche les informations des instances d'un modèle
         })
