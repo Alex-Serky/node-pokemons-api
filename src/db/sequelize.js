@@ -15,7 +15,7 @@ const sequelize = new Sequelize('pokedex', 'root', '',
     }
 )
 
-const Pokemon = PokemonModel(sequelize, DataTypes)
+const Pokemon = PokemonModel(sequelize, DataTypes);
 
 const initDb = () => {
     return sequelize.sync({force: true}).then(_ => {
@@ -26,7 +26,7 @@ const initDb = () => {
                 hp: pokemon.hp,
                 cp: pokemon.cp,
                 picture: pokemon.picture,
-            //    types: pokemon.types.join() // Affiche : "Plante,Poison" dans la BDD
+                types: pokemon.types // Affiche : "Plante,Poison" dans la BDD
             }).then(pokemon => console.log(pokemon.toJSON()))
             // toJSON() affiche les informations des instances d'un modèle
         })
