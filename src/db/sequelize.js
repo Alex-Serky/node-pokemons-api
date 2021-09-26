@@ -1,6 +1,7 @@
 // On importe le module Sequelize :
 const { Sequelize, DataTypes } = require('sequelize');
 const PokemonModel = require('../models/pokemon')
+const UserModel = require('../models/user')
 const pokemons = require('./mock-pokemon.js')
 
 // On configure la connexion à la base de données via Sequelize :
@@ -15,7 +16,8 @@ const sequelize = new Sequelize('pokedex', 'root', '',
     }
 )
 
-const Pokemon = PokemonModel(sequelize, DataTypes);
+const Pokemon = PokemonModel(sequelize, DataTypes)
+const User = UserModel(sequelize, DataTypes)
 
 const initDb = () => {
     return sequelize.sync({force: true}).then(_ => {
@@ -30,10 +32,16 @@ const initDb = () => {
             }).then(pokemon => console.log(pokemon.toJSON()))
             // toJSON() affiche les informations des instances d'un modèle
         })
+        User.create({
+            username: 'pikachu',
+            password: 'pikachu'
+        })
+        .then(user => console.log(user.toJSON()))
+
         console.log('La base de données a bien été initialisisée !')
     })
 }
 
 module.exports = {
-    initDb, Pokemon
+    initDb, Pokemon, User
 }
