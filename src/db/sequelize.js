@@ -34,7 +34,7 @@ const initDb = () => {
             // toJSON() affiche les informations des instances d'un modèle
         })
         User.create({
-            username: 'pikachu',
+            username: 'pikachu1',
             password: 'pikachu'
         })
         bcrypt.hash('pikachu', 10)
