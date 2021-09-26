@@ -8,19 +8,23 @@ module.exports = (app) => {
     app.get('/api/pokemons', (req, res) => {
         if(req.query.name) {
             const name = req.query.name // Paramètre de requête avec Express
+            const limit = parseInt(req.query.limit) || 5
+
+            if(name.length < 2) {
+                const message = `Le terme de recherche doit contenir au minimum 2 caractères.`
+                return res.status(400).json({ message })
+            }
+
             return Pokemon.findAndCountAll({
                 where: {
                     name: { // name est la propriété du modèle pokémon recherchée
-                        [Op.or]: {
-                            [Op.like]: `%${name}%`,
-                            [Op.startsWith]: capitalize(name)
-                        }
+                        [Op.like]: `%${name}%`
                     }
                 },
                 order: ['name'],
-                limit: 5 // Le nombre de résultats maximum souhaités
+                limit: limit // Le nombre de résultats maximum souhaités
             })
-            .then((count, rows) => {
+            .then(({count, rows}) => {
                 const message = `Il y a ${count} qui correspondent au terme de recherche ${name}.`
                 return res.json({ message, data: rows })
             })
