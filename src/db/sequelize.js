@@ -1,5 +1,6 @@
 // On importe le module Sequelize :
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize')
+const bcrypt = require('bcrypt')
 const PokemonModel = require('../models/pokemon')
 const UserModel = require('../models/user')
 const pokemons = require('./mock-pokemon.js')
@@ -36,6 +37,8 @@ const initDb = () => {
             username: 'pikachu',
             password: 'pikachu'
         })
+        bcrypt.hash('pikachu', 10)
+        .then(hash => User.create({ username: 'pikachu', password: hash }))
         .then(user => console.log(user.toJSON()))
 
         console.log('La base de données a bien été initialisisée !')
