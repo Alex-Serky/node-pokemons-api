@@ -17,6 +17,7 @@ module.exports = (app) => {
                         }
                     }
                 },
+                order: ['name'],
                 limit: 5 // Le nombre de résultats maximum souhaités
             })
             .then((count, rows) => {
@@ -24,7 +25,7 @@ module.exports = (app) => {
                 return res.json({ message, data: rows })
             })
         }else {
-            Pokemon.findAll()
+            Pokemon.findAll({ order: ['name']})
             .then(pokemons => {
                 const message = 'La liste des pokémons a bien été récupérée.'
                 res.json({ message, data: pokemons })
