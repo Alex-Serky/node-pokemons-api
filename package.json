@@ -1,10 +1,11 @@
 {
-  "name": "node-pokemon-api",
+  "name": "express-api-rest",
   "version": "1.0.0",
   "description": "An awesome API Rest to handle some pokemons.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "NODE_ENV=production node app.js", // Démarrage en production
+    "dev": "NODE_ENV=development nodemon app.js" // Démarage en développemnt
   },
   "author": "Alexis",
   "license": "ISC",
@@ -12,6 +13,6 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "^4.17.1"
+    "nodemon": "^4.17.1", // Ne sera pas utilisé par Heroku
   }
 }

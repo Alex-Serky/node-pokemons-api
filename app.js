@@ -1,6 +1,5 @@
 // Les importations...
 const express = require('express')
-const morgan = require('morgan')
 const favicon = require('serve-favicon')
 // const bodyParser = require('body-parser')
 const sequelize = require('./src/db/sequelize')
@@ -11,7 +10,6 @@ const port = process.env.PORT || 3000
 
 app
 .use(favicon(__dirname + '/favicon.ico'))
-.use(morgan('dev'))
 .use(express.json()); // Car bodyParser est déprécié (Used to parse JSON bodies)
 
 sequelize.initDb()
