@@ -1,7 +1,6 @@
 // Les importations...
 const express = require('express')
 const favicon = require('serve-favicon')
-// const bodyParser = require('body-parser')
 const sequelize = require('./src/db/sequelize')
 
 const app = express()
@@ -17,8 +16,6 @@ sequelize.initDb()
 app.get('/', (req, res) => {
     res.json('Hello, Heroku ! 👋')
 })
-
-require('./src/routes/findAllPokemons')(app)
 
 // Ici, nous placerons nos futurs points de terminaisons !
 
