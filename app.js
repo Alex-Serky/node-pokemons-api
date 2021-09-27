@@ -6,7 +6,8 @@ const favicon = require('serve-favicon')
 const sequelize = require('./src/db/sequelize')
 
 const app = express()
-const port = 3000
+// On attribue un port différent en fonction des environnements :
+const port = process.env.PORT || 3000
 
 app
 .use(favicon(__dirname + '/favicon.ico'))
